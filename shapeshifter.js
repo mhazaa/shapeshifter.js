@@ -24,55 +24,6 @@ class HelperFunctions {
   }
 }
 
-class ShapeshifterSettings {
-  constructor(options){
-    this.options = {};
-    var defaultSpeed;
-    (options.defaultSpeed) ? defaultSpeed = options.defaultSpeed : defaultSpeed = 0.07;
-    this.options.transformSpeed = {x: defaultSpeed, y: defaultSpeed}; //default value
-    this.options.hideSpeed = {x: defaultSpeed, y: defaultSpeed}; //default value
-    this.options.scale = 1;
-    this.options.colorSpeed = defaultSpeed;
-    this.options.opacitySpeed = defaultSpeed;
-
-
-    if(options){
-      for(var option in options){
-        if(options[option]) this.options[option] =  options[option]
-      }
-    }
-  }
-}
-
-class ShapeshifterCanvas extends ShapeshifterSettings {
-  constructor(container, options){
-    super(options);
-    this.canvas;
-    this.ctx;
-    this.shapeshifters = [];
-    this.container = container;
-    this.init();
-  }
-  init(){
-    this.canvas = document.createElement('canvas');
-    this.canvas.style.position = 'absolute';
-    this.canvas.style.top = '0';
-    this.canvas.style.left = '0';
-    this.canvas.style.width = '100%';
-    this.canvas.style.height = '100%';
-    this.container.append(this.canvas);
-    this.ctx = this.canvas.getContext('2d');
-
-    this.canvas.width = this.container.offsetWidth;
-    this.canvas.height = this.container.offsetHeight;
-    var that = this;
-    window.addEventListener('resize', function(){
-      that.canvas.width = that.container.offsetWidth;
-      that.canvas.height = that.container.offsetHeight;
-    });
-  }
-}
-
 class Polygon {
   constructor(shapeshifter, x, y, svgPolygon){
     this.opacity = 1;
@@ -205,6 +156,55 @@ class Polygon {
     shapeshifter.ctx.stroke();
     shapeshifter.ctx.fill();
     shapeshifter.ctx.restore();
+  }
+}
+
+class ShapeshifterSettings {
+  constructor(options){
+    this.options = {};
+    var defaultSpeed;
+    (options.defaultSpeed) ? defaultSpeed = options.defaultSpeed : defaultSpeed = 0.07;
+    this.options.transformSpeed = {x: defaultSpeed, y: defaultSpeed}; //default value
+    this.options.hideSpeed = {x: defaultSpeed, y: defaultSpeed}; //default value
+    this.options.scale = 1;
+    this.options.colorSpeed = defaultSpeed;
+    this.options.opacitySpeed = defaultSpeed;
+
+
+    if(options){
+      for(var option in options){
+        if(options[option]) this.options[option] =  options[option]
+      }
+    }
+  }
+}
+
+class ShapeshifterCanvas extends ShapeshifterSettings {
+  constructor(container, options){
+    super(options);
+    this.canvas;
+    this.ctx;
+    this.shapeshifters = [];
+    this.container = container;
+    this.init();
+  }
+  init(){
+    this.canvas = document.createElement('canvas');
+    this.canvas.style.position = 'absolute';
+    this.canvas.style.top = '0';
+    this.canvas.style.left = '0';
+    this.canvas.style.width = '100%';
+    this.canvas.style.height = '100%';
+    this.container.append(this.canvas);
+    this.ctx = this.canvas.getContext('2d');
+
+    this.canvas.width = this.container.offsetWidth;
+    this.canvas.height = this.container.offsetHeight;
+    var that = this;
+    window.addEventListener('resize', function(){
+      that.canvas.width = that.container.offsetWidth;
+      that.canvas.height = that.container.offsetHeight;
+    });
   }
 }
 
