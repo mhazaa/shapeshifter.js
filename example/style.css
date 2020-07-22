@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  position: relative;
+  background: #161616;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 999;
+}
+svg {
+  display: none;
+  position: absolute;
+}
