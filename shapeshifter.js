@@ -213,6 +213,7 @@ class Shapeshifter extends ShapeshifterCanvas {
     this.y = y;
 
     this.svg = svgPolygons[0].parentNode;
+    this.initialSvg = this.svg; //we're storing this cause we need to refrence when resizing lookat applyScale()
 
     this.polygons = [];
 
@@ -225,8 +226,8 @@ class Shapeshifter extends ShapeshifterCanvas {
     }
   }
   applyScale(){
-    if(!this.cachedInitalScale) this.cachedInitalScale = this.options.scale;
-    var w = this.svg.viewBox.baseVal.width/this.cachedInitalScale;
+    if(!this.cachedInitialScale) this.cachedInitialScale = this.options.scale; //We wanna save the initial value for options.scale since we're going to set a new value for options.scale two lines from now
+    var w = this.initialSvg.viewBox.baseVal.width/this.cachedInitialScale;
     this.options.scale = (this.canvas.width/w);
   }
   center(){
