@@ -10,8 +10,8 @@ var shapeshifter = new Shapeshifter(container, 0, 0, flamengoPolygons, {
   hideSpeed: {x:0.05, y:0.05},
   opacitySpeed: 0.05,
   colorSpeed: 0.05,*/
-  defaultSpeed: 0.03,
-  scale: 0.3,
+  defaultSpeed: 0.03, //any speed properities not defined will resort to defaultSpeed
+  scale: 0.3, //1 is 100% of the container's width
   center: true,
   strokeOnly: false
 });

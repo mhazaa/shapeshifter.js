@@ -143,7 +143,6 @@ class Polygon {
     shapeshifter.ctx.save();
     shapeshifter.ctx.beginPath();
     shapeshifter.ctx.fillStyle = 'rgba(' + this.color[0] + ',' + this.color[1] + ',' + this.color[2] + ',' + this.opacity + ')';
-    //ctx.fillStyle = this.color;
     for(var i=0; i<this.points.length; i++){
       if(i==0){
         shapeshifter.ctx.moveTo(this.shapeshifter.x + this.x+this.points[i].x*this.shapeshifter.options.scale, this.shapeshifter.y+this.y+this.points[i].y*this.shapeshifter.options.scale);
@@ -161,15 +160,14 @@ class Polygon {
 
 class ShapeshifterSettings {
   constructor(options){
-    this.options = {};
     var defaultSpeed;
     (options.defaultSpeed) ? defaultSpeed = options.defaultSpeed : defaultSpeed = 0.07;
+    this.options = {};
     this.options.transformSpeed = {x: defaultSpeed, y: defaultSpeed}; //default value
     this.options.hideSpeed = {x: defaultSpeed, y: defaultSpeed}; //default value
     this.options.scale = 1;
     this.options.colorSpeed = defaultSpeed;
     this.options.opacitySpeed = defaultSpeed;
-
 
     if(options){
       for(var option in options){
@@ -223,7 +221,7 @@ class Shapeshifter extends ShapeshifterCanvas {
 
     if(this.options.center){
       this.center();
-      this.input();
+      this.onResize();
     }
   }
   applyScale(){
@@ -234,7 +232,7 @@ class Shapeshifter extends ShapeshifterCanvas {
   center(){
     var w = this.svg.viewBox.baseVal.width*this.options.scale;
     var h = this.svg.viewBox.baseVal.height*this.options.scale;
-    if(this.centered){
+    if(this.centered){ //to make sure it doesn't just jump to center when transforming to a new shape. We'll lerp from x and y to newX and newY in the update function
       this.newX = this.canvas.width/2 - w/2;
       this.newY = this.canvas.height/2 - h/2;
     } else {
@@ -243,7 +241,7 @@ class Shapeshifter extends ShapeshifterCanvas {
       this.centered = true;
     }
   }
-  input(){
+  onResize(){
     var that = this;
     window.addEventListener('resize', function(){
       that.applyScale();
@@ -268,11 +266,14 @@ class Shapeshifter extends ShapeshifterCanvas {
     this.svg = svgPolygons[0].parentNode;
     if(this.options.center) this.center();
 
+    //if both shapes have same amount of polygons, just transform all of them
     if(this.polygons.length==svgPolygons.length){
       for(var i=0; i<this.polygons.length; i++){
         this.polygons[i].transform(svgPolygons[i]);
       }
     }
+
+    //if intial shape has more polygons than the new shape, hide all the extra ones
     else if(this.polygons.length>svgPolygons.length){
       for(var i=0; i<this.polygons.length; i++){
         if(svgPolygons[i]){
@@ -282,6 +283,8 @@ class Shapeshifter extends ShapeshifterCanvas {
         }
       }
     }
+
+    //if initial shape has less polyogns than the new shape, then create all the missing the polygons
     else if(this.polygons.length<svgPolygons.length){
       for(var i=0; i<svgPolygons.length; i++){
         if(this.polygons[i]){
