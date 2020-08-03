@@ -4,6 +4,7 @@ http://shapeshifterjs.com
 
 Shapeshifter.js takes low poly SVGs and transforms them into each other. The shapes don't need to have the same number of polygons. The polygons don't need to have equal number of points. And the polygons can have different colors and opacity.
 
+
 ## SETTING UP THE DOM
 
 - First of all you'll need the SVG markup for the shapes you want to transform between. This is the markup for two of the shapes in the example.
@@ -77,9 +78,13 @@ Shapeshifter.js takes low poly SVGs and transforms them into each other. The sha
     </svg>
 
 Few notes:
+
 1- As of now, the SVG needs to consist of polygons. I'm planning to implement the ability for shapeshifter.js to take other svg shapes that have path, polylines...etc. But as of now, it only works with polygons.
+
 2- Make sure to set the display on the svg to none. We're not going to display the SVG. We're just taking the svg and polygon attributes and transferring them to a JavaScript canvas.
+
 3- Notice how every polygon has a fill value. If it doesn't shapeshifter.js will default to black.
+
 4- If you'd like the polygons to have different opacity, add it as an inline css value just like fill. Otherwise, the polygons will have full opacity by default.
 
 - OK, next thing we need is a parent element for our canvas.
@@ -94,6 +99,7 @@ Our canvas size is gonna be relative to the container, so make sure container do
 Just download the shapeshifter.js file and link it in your html.
 
     <script src="shapeshifter.js"></script>
+
 
 ## USAGE
 
@@ -128,3 +134,29 @@ Now let's initialzie Shapeshifter
     }
 
     var shapeshifter = new Shapeshifter(container, 0, 0, retrieverPolygons, options);
+
+Before the animation we need to create a recursive loop function to update Shapeshifter
+
+    function loop(){
+      shapeshifter.loop();
+      window.requestAnimationFrame(loop);
+    }
+    loop();
+    
+Now if you wanna transform the svg. Run this method
+
+    shapeshifter.transform(newPolygons);
+    
+In this example newPolygons being passerinePolygons.
+
+So let's switch back and forth between passerinePolygons and retrieverPolygons onClick. I'll just use a boolean since we're transforming between two SVGs only in the example, but we can can transform between any number of SVGs.
+
+    var animationState = true;
+    window.addEventListener('click', function(){
+      if(animationState){
+        shapeshifter.transform(passerinePolygons);
+      } else {
+        shapeshifter.transform(retrieverPolygons);
+      }
+      animationState = !animationState;
+    });
