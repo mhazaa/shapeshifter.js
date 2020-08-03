@@ -152,6 +152,7 @@ In this example newPolygons being passerinePolygons.
 So let's switch back and forth between passerinePolygons and retrieverPolygons onClick. I'll just use a boolean since we're transforming between two SVGs only in the example, but we can can transform between any number of SVGs.
 
     var animationState = true;
+    
     window.addEventListener('click', function(){
       if(animationState){
         shapeshifter.transform(passerinePolygons);
