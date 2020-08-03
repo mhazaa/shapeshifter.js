@@ -1,11 +1,11 @@
+var retrieverPolygons = document.querySelector('#retriever').querySelectorAll('polygon');
 var flamengoPolygons = document.querySelector('#flamengo').querySelectorAll('polygon');
-var earthPolygons = document.querySelector('#earth').querySelectorAll('polygon');
-var cocoonPolygons = document.querySelector('#cocoon').querySelectorAll('polygon');
-var butterflyPolygons = document.querySelector('#butterfly').querySelectorAll('polygon');
-var landscapePolygons = document.querySelector('#landscape').querySelectorAll('polygon');
+var passerinePolygons = document.querySelector('#passerine').querySelectorAll('polygon');
+
+var all = [retrieverPolygons, flamengoPolygons, passerinePolygons];
 
 var container = document.querySelector('#container');
-var shapeshifter = new Shapeshifter(container, 0, 0, flamengoPolygons, {
+var shapeshifter = new Shapeshifter(container, 0, 0, all[0], {
   /*transformSpeed: {x:0.05, y:0.05},
   hideSpeed: {x:0.05, y:0.05},
   opacitySpeed: 0.05,
@@ -16,7 +16,7 @@ var shapeshifter = new Shapeshifter(container, 0, 0, flamengoPolygons, {
   strokeOnly: false
 });
 
-var shapeshifterStroke = new Shapeshifter(container, 0, 0, flamengoPolygons, {
+var shapeshifterStroke = new Shapeshifter(container, 0, 0, all[0], {
   /*transformSpeed: {x:0.05, y:0.05},
   hideSpeed: {x:0.05, y:0.05},
   opacitySpeed: 0.05,
@@ -34,20 +34,10 @@ function loop(){
 }
 loop();
 
-var animationState = -1;
+var animationState = 0;
 window.addEventListener('click', function(){
   animationState++;
-  if(animationState>2)animationState=0;
-  if(animationState==0){
-    shapeshifter.transform(butterflyPolygons);
-    shapeshifterStroke.transform(butterflyPolygons);
-  }
-  if(animationState==1){
-    shapeshifter.transform(cocoonPolygons);
-    shapeshifterStroke.transform(cocoonPolygons);
-  }
-  if(animationState==2){
-    shapeshifter.transform(flamengoPolygons);
-    shapeshifterStroke.transform(flamengoPolygons);
-  }
+  if(animationState>=all.length)animationState=0;
+  shapeshifter.transform( all[animationState] );
+  shapeshifterStroke.transform( all[animationState] );
 });
