@@ -79,7 +79,7 @@ Shapeshifter.js takes low poly SVGs and transforms them into each other. The sha
 
 Few notes:
 
-- As of now, the SVG needs to consist of polygons. I'm planning to implement the ability for shapeshifter.js to take other svg shapes that have path, polylines...etc. But as of now, it only works with polygons.
+- As of now, the SVGs need to consist of polygons. I'm planning to implement the ability for shapeshifter.js to take other SVGs that have paths, rects etc. But as of now, it only works with polygons.
 
 - Make sure to set the display on the svg to none. We're not going to display the SVG directly in the DOM. We're just taking the svg and polygon attributes and displaying them on a JavaScript canvas.
 
@@ -120,15 +120,21 @@ We'll add a reference to the container div also
 
     var container = document.querySelector('#container');
 
-Now let's initialzie Shapeshifter
+Now let's initialzie Shapeshifter.
 
     var shapeshifter = new Shapeshifter(container, x, y, polygons, options);
      
 **container | domElement**: The container element we created earlier.
+
 **x | number**: Initial x value, I recommened setting it as 0 and changing the container's position instead.
+
 **y | number**: Initial y value, I also recommened setting it as 0 and changing the container's position instead.
+
 **polygons | domElements**: The initial SVG for Shapeshifter before any transformation happen. Pass the array of polygons from earlier (retrieverPolygons, passerinePolygons);
+
 **options | object**: pass any options you wanna change. Here are all the options you can pass.
+
+Here's how we'll initialize it in this example:
 
     var options = {
       /*transformSpeed: {x:0.05, y:0.05}, //transformation speed 
