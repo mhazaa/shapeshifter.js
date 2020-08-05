@@ -153,33 +153,19 @@ Here's how we'll initialize it in this example:
 
 These are the paramaters you can pass as options:
 
-**transformSpeed**: {x: number; y: number}
+**transformSpeed | {x: number; y: number}**: Transformation speed. Default value is {x: 0.07, y: 0.07}
 
-Transformation speed. Default value is {x: 0.07, y: 0.07}
+**hideSpeed | {x: number; y: number}**: The speed extra polygons get hidden. Default value is {x: 0.07, y: 0.07}
 
-**hideSpeed**: {x: number; y: number}
+**opacitySpeed | number**: The speed polygons will change opacity. Default value is 0.07
 
-The speed extra polygons get hidden. Default value is {x: 0.07, y: 0.07}
+**colorSpeed | number**: The speed polygons will change color. Default value is 0.07
 
-**opacitySpeed**: number
+**scale | number**: The size of the initial SVG. 1 == 100% of the container div width. The SVGs your transform to will just be sized relatively to the first. So make sure they're all similiar size when you export them.
 
-The speed polygons will change opacity. Default value is 0.07
+**scale | boolean**: Center the SVG inside the container. Otherwise they stay on the top left of the container.
 
-**colorSpeed**: number
-
-The speed polygons will change color. Default value is 0.07
-
-**scale**: number
-
-The size of the initial SVG. 1 == 100% of the container div width. The SVGs your transform to will just be sized relatively to the first. So make sure they're all similiar size when you export them.
-
-**scale**: boolean
-
-Center the SVG inside the container. Otherwise they stay on the top left of container
-
-**strokeOnly**: boolean
-
-Only show the outlines.
+**strokeOnly | boolean**: Only show the outlines.
 
 ## RUNNING THE LOOP
 
