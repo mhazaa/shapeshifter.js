@@ -81,7 +81,7 @@ Few notes:
 
 - As of now, the SVGs need to consist of polygons. I'm planning to implement the ability for shapeshifter.js to take other SVGs that have paths, rects etc. But as of now, it only works with polygons.
 
-- Make sure to set the display on the svg to none. We're not going to display the SVG directly in the DOM. We're just taking the svg and polygon attributes and displaying them on a JavaScript canvas.
+- Make sure to set the display on the SVGs to none. We're not going to display them directly in the DOM. We're just taking the SVG and polygon attributes and displaying them on a JavaScript canvas.
 
 - Notice how every polygon has a fill value. If it doesn't shapeshifter.js will default to black.
 
@@ -126,9 +126,9 @@ Now let's initialzie Shapeshifter.
      
 **container | domElement**: The container element we created earlier.
 
-**x | number**: Initial x value, I recommened setting it as 0 and changing the container's position instead.
+**x | number**: Initial x value, I recommend setting it as 0 and changing the container's position instead.
 
-**y | number**: Initial y value, I also recommened setting it as 0 and changing the container's position instead.
+**y | number**: Initial y value, I also recommend setting it as 0 and changing the container's position instead.
 
 **polygons | domElements**: The initial SVG for Shapeshifter before any transformation happen. Pass the array of polygons from earlier (retrieverPolygons, passerinePolygons);
 
@@ -162,9 +162,9 @@ These are the paramaters you can pass as options:
 
 **colorSpeed | number**: The speed polygons will change color. Default value is 0.07
 
-**defaultSpeed | number**: The default speed all the other unset speed properities take. Default value is 0.07
+**defaultSpeed | number**: The default speed all the other unset speed properties take. Default value is 0.07
 
-**scale | number**: The size of the initial SVG. 1 == 100% of the container div width. The SVGs your transform to will just be sized relatively to the first. So make sure they're all similiar size when you export them.
+**scale | number**: The size of the initial SVG. 1 == 100% of the container div width. The SVGs your transform to will just be sized relatively to the first. So make sure they're all similar size when you export them.
 
 **center | boolean**: Center the SVG inside the container. Otherwise they stay on the top left of the container.
 
