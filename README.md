@@ -7,7 +7,7 @@ Shapeshifter.js takes low poly SVGs and transforms them into each other. The sha
 
 ## SETTING UP THE DOM
 
-- First of all you'll need the SVG markup for the shapes you want to transform between. This is the markup for two of the shapes in the example.
+1- First of all you'll need the SVG markup for the shapes you want to transform between. This is the markup for two of the shapes in the example.
 
     <svg id="retriever" viewBox="0 0 227.49 200.03">
       <polygon points="144.38 0 177.82 20 192.51 88.14 144.38 0" style="fill: #f79a4c"/>
@@ -79,19 +79,27 @@ Shapeshifter.js takes low poly SVGs and transforms them into each other. The sha
 
 Few notes:
 
-1- As of now, the SVG needs to consist of polygons. I'm planning to implement the ability for shapeshifter.js to take other svg shapes that have path, polylines...etc. But as of now, it only works with polygons.
+- As of now, the SVG needs to consist of polygons. I'm planning to implement the ability for shapeshifter.js to take other svg shapes that have path, polylines...etc. But as of now, it only works with polygons.
 
-2- Make sure to set the display on the svg to none. We're not going to display the SVG. We're just taking the svg and polygon attributes and transferring them to a JavaScript canvas.
+- Make sure to set the display on the svg to none. We're not going to display the SVG directly in the DOM. We're just taking the svg and polygon attributes and displaying them on a JavaScript canvas.
 
-3- Notice how every polygon has a fill value. If it doesn't shapeshifter.js will default to black.
+- Notice how every polygon has a fill value. If it doesn't shapeshifter.js will default to black.
 
-4- If you'd like the polygons to have different opacity, add it as an inline css value just like fill. Otherwise, the polygons will have full opacity by default.
+- If you'd like the polygons to have different opacity, add it as an inline css value just like fill. Otherwise, the polygons will have full opacity by default.
 
-- OK, next thing we need is a parent element for our canvas.
+2- OK, next thing we need is a parent element for our canvas.
 
     <div id="container"></div>
     
-Our canvas size is gonna be relative to the container, so make sure container doesn't have a width or height of zero.
+3- Our canvas size is gonna be relative to the container, so make sure to give the container width and height (and it can be responsive or static) In this case I'll just make it fill the viewport.
+
+    #container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
 
 
 ## INSTALLATION
@@ -103,25 +111,25 @@ Just download the shapeshifter.js file and link it in your html.
 
 ## USAGE
 
-OK, now we're ready to jump to javascript and start with all the fun stuff. First we'll add a refrence for our svg shapes. Make sure to querySelectorAll the polygon. Not the SVG itself.
+OK, now we're ready to jump in to all the fun JavaScript stuff. First we'll add a reference for our svg shapes. Make sure to querySelectorAll the polygons. Not the SVG itself.
 
     var retrieverPolygons = document.querySelector('#retriever').querySelectorAll('polygon');
     var passerinePolygons = document.querySelector('#passerine').querySelectorAll('polygon');
 
-We'll add a reference to the container also
+We'll add a reference to the container div also
 
     var container = document.querySelector('#container');
 
 Now let's initialzie Shapeshifter
 
     var shapeshifter = new Shapeshifter(container, x, y, polygons, options);
-    
+     
 **container | domElement**: The container element we created earlier.
 **x | number**: Initial x value, I recommened setting it as 0 and changing the container's position instead.
 **y | number**: Initial y value, I also recommened setting it as 0 and changing the container's position instead.
 **polygons | domElements**: The initial SVG for Shapeshifter before any transformation happen. Pass the array of polygons from earlier (retrieverPolygons, passerinePolygons);
 **options | object**: pass any options you wanna change. Here are all the options you can pass.
-    
+
     var options = {
       /*transformSpeed: {x:0.05, y:0.05}, //transformation speed 
       hideSpeed: {x:0.05, y:0.05}, //the speed extra polygons get hidden
@@ -134,8 +142,42 @@ Now let's initialzie Shapeshifter
     }
 
     var shapeshifter = new Shapeshifter(container, 0, 0, retrieverPolygons, options);
+    
+## OPTIONS OBJECT
 
-Before the animation we need to create a recursive loop function to update Shapeshifter
+These are the paramaters you can pass as options:
+
+**transformSpeed**: {x: number; y: number}
+
+Transformation speed. Default value is {x: 0.07, y: 0.07}
+
+**hideSpeed**: {x: number; y: number}
+
+The speed extra polygons get hidden. Default value is {x: 0.07, y: 0.07}
+
+**opacitySpeed**: number
+
+The speed polygons will change opacity. Default value is 0.07
+
+**colorSpeed**: number
+
+The speed polygons will change color. Default value is 0.07
+
+**scale**: number
+
+The size of the initial SVG. 1 == 100% of the container div width. The SVGs your transform to will just be sized relatively to the first. So make sure they're all similiar size when you export them.
+
+**scale**: boolean
+
+Center the SVG inside the container. Otherwise they stay on the top left of container
+
+**strokeOnly**: boolean
+
+Only show the outlines.
+
+## RUNNING THE LOOP
+
+Now before Shapeshifter.js animation work, we need to run its loop function every frame. So we'll create a recursive loop function to update Shapeshifter.
 
     function loop(){
       shapeshifter.loop();
@@ -143,21 +185,25 @@ Before the animation we need to create a recursive loop function to update Shape
     }
     loop();
     
-Now if you wanna transform the svg. Run this method
+## TRANSFORMATION
+
+Now the part we're doing all of this for. If you wanna transform the svg. Run this method.
 
     shapeshifter.transform(newPolygons);
     
 In this example newPolygons being passerinePolygons.
 
-So let's switch back and forth between passerinePolygons and retrieverPolygons onClick. I'll just use a boolean since we're transforming between two SVGs only in the example, but we can can transform between any number of SVGs.
+And here's a quick example function to switch back and forth between passerinePolygons and retrieverPolygons on click. I'll just use a boolean since we're transforming between two SVGs only in this example, but we can can transform between any number of SVGs.
 
-    var animationState = true;
-    
-    window.addEventListener('click', function(){
-      if(animationState){
-        shapeshifter.transform(passerinePolygons);
-      } else {
-        shapeshifter.transform(retrieverPolygons);
-      }
-      animationState = !animationState;
-    });
+    (function(){
+        var animationState = true;
+
+        window.addEventListener('click', function(){
+          if(animationState){
+            shapeshifter.transform(passerinePolygons);
+          } else {
+            shapeshifter.transform(retrieverPolygons);
+          }
+          animationState = !animationState;
+        });
+    })();
