@@ -149,6 +149,7 @@ Here's how we'll initialize it in this example:
 
     var shapeshifter = new Shapeshifter(container, 0, 0, retrieverPolygons, options);
     
+    
 ## OPTIONS OBJECT
 
 These are the paramaters you can pass as options:
@@ -161,21 +162,25 @@ These are the paramaters you can pass as options:
 
 **colorSpeed | number**: The speed polygons will change color. Default value is 0.07
 
+**defaultSpeed | number**: The default speed all the other unset speed properities take. Default value is 0.07
+
 **scale | number**: The size of the initial SVG. 1 == 100% of the container div width. The SVGs your transform to will just be sized relatively to the first. So make sure they're all similiar size when you export them.
 
-**scale | boolean**: Center the SVG inside the container. Otherwise they stay on the top left of the container.
+**center | boolean**: Center the SVG inside the container. Otherwise they stay on the top left of the container.
 
 **strokeOnly | boolean**: Only show the outlines.
 
+
 ## RUNNING THE LOOP
 
-Now before Shapeshifter.js animation work, we need to run its loop function every frame. So we'll create a recursive loop function to update Shapeshifter.
+Now before Shapeshifter.js animations work, we need to run its loop function every frame. So we'll create a recursive loop function to update Shapeshifter.
 
     function loop(){
       shapeshifter.loop();
       window.requestAnimationFrame(loop);
     }
     loop();
+    
     
 ## TRANSFORMATION
 
