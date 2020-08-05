@@ -7,7 +7,7 @@ Shapeshifter.js takes low poly SVGs and transforms them into each other. The sha
 
 ## SETTING UP THE DOM
 
-1- First of all you'll need the SVG markup for the shapes you want to transform between. This is the markup for two of the shapes in the example.
+1- First of all you'll need the SVG markup for the shapes you want to transform between. I personally use illustrator to draw the vectors and export the SVG code, but there are a lot of options obviously. This is the markup for two of the SVGs in the example.
 
     <svg id="retriever" viewBox="0 0 227.49 200.03">
       <polygon points="144.38 0 177.82 20 192.51 88.14 144.38 0" style="fill: #f79a4c"/>
