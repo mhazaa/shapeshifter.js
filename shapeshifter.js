@@ -196,12 +196,13 @@ class ShapeshifterCanvas extends ShapeshifterSettings {
     this.container.append(this.canvas);
     this.ctx = this.canvas.getContext('2d');
 
-    this.canvas.width = this.container.offsetWidth;
-    this.canvas.height = this.container.offsetHeight;
+    const devicePixelRatio = window.devicePixelRatio;
+    this.canvas.width = this.container.offsetWidth * devicePixelRatio;
+    this.canvas.height = this.container.offsetHeight * devicePixelRatio;
     var that = this;
     window.addEventListener('resize', function(){
-      that.canvas.width = that.container.offsetWidth;
-      that.canvas.height = that.container.offsetHeight;
+      that.canvas.width = that.container.offsetWidth * devicePixelRatio;
+      that.canvas.height = that.container.offsetHeight * devicePixelRatio;
     });
   }
 }
