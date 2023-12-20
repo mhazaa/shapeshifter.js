@@ -1,6 +1,6 @@
 # Shapeshifter.js
 
-http://shapeshifterjs.com
+https://shapeshifterjs.com/
 
 Shapeshifter.js takes low poly SVGs and transforms them into each other. The shapes don't need to have the same number of polygons. The polygons don't need to have equal number of points. And the polygons can have different colors and opacity.
 
